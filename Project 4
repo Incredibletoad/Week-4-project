@@ -1,0 +1,95 @@
+
+from colorama import Fore, Back, Style
+
+# Function that prints out a letter with a colorful background
+def printColorfulLetter(letter, isLetterInWord, isLetterInCorrectPlace = False):
+
+  # Check if letter in word, if it is color red
+  if(not isLetterInWord):
+    print(Back.RED + Fore.WHITE + f" {letter} ", end="")
+
+  #If in the word
+  else:
+
+    #if letter is in the right spot
+    if(isLetterInCorrectPlace):
+      print(Back.LIGHTGREEN_EX + Fore.WHITE + f" {letter} ", end="")  
+
+    # in the word but not the correct place, color yellow
+    else:
+      print(Back.LIGHTYELLOW_EX + Fore.BLACK + f" {letter} ", end="")
+
+# Function for taking user guess and comparing to code word
+def printGuessAccuracy(guess, actual):
+
+  # for loop for range of 6 (len of string)
+  for index in range(6):
+    # Grab the letter from the guess
+    letter = guess[index]
+    codeWord = actual
+
+    # check if the letter is in the codeword anywhere
+    if(letter in codeWord):
+
+      # If letter is at the correct index
+      if(letter == codeWord[index]):
+
+        # Then print it out with a green background
+        printColorfulLetter(letter, True, True)
+
+      # If not in the correct place, is in incorrect place, still in word
+      else:
+
+        # print letter with yellow background
+        printColorfulLetter(letter, True, False)
+    # letter not in word at all
+    else:
+      # print letter with red background
+      printColorfulLetter(letter, False, False)
+
+    print(Style.RESET_ALL + " ", end="")
+
+
+def getSixLetterInput():
+  #var for user guess to initiate while loop
+  userGuess = ""
+  #is userGuess isn't 6 char long
+  while(not len(userGuess) == 6):
+      #repeat question
+      userGuess = input("Please enter a six letter word: ")
+  #else return the 6 char 
+  return userGuess.lower()
+
+### Main Program ###
+
+#intro
+print("WELCOME TO THE WORDLE 2.0.... GOOD LUCK\n\n\n")
+#Secret Word Variable
+codeWord = "jinxed"
+
+#countguess variable 0 
+countGuess = 0
+#guess equals return value of function
+
+#variable for final guess. Empty, initiates the while loop
+finalGuess = ""
+#while the countguess is less than 6 and not the codeword
+while countGuess < 6 and finalGuess != codeWord:
+  finalGuess = getSixLetterInput()
+#pass that value to the guess accuracy function.
+  printGuessAccuracy(finalGuess, codeWord)
+  countGuess += 1
+  if countGuess == 6:
+    print("SORRY YOU LOSE")
+# if finalguess is the word
+if finalGuess == codeWord:
+  print("YOU WON")
+
+
+
+
+
+
+
+
+
